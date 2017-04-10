@@ -18,27 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\analyze.cpp" />
-    <ClCompile Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\cgen.cpp" />
-    <ClCompile Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\code.cpp" />
-    <ClCompile Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\main.cpp" />
-    <ClCompile Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\parse.cpp" />
-    <ClCompile Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\scan.cpp" />
-    <ClCompile Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\symtab.cpp" />
-    <ClCompile Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\util.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\analyze.h" />
-    <ClInclude Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\cgen.h" />
-    <ClInclude Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\code.h" />
-    <ClInclude Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\globals.h" />
-    <ClInclude Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\parse.h" />
-    <ClInclude Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\scan.h" />
-    <ClInclude Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\stdafx.h" />
-    <ClInclude Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\symtab.h" />
-    <ClInclude Include="C:\Users\Administrator\Desktop\编译原理\tiny+源码\util.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F96725B6-5762-4BEB-A54B-01ADC74865A3}</ProjectGuid>
     <RootNamespace>草稿3</RootNamespace>
