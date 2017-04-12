@@ -21,6 +21,7 @@ void fun(int val)
   
 int main() 
 { 
+	system("cls");
 	Sleep(2000);
 	for (int i = 0; i <  Global::GameArea::HEIGHT; i++)
 	{

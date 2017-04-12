@@ -25,10 +25,10 @@ public:
 	bool accessible(const Position & pos);
 	void die();
 	bool operator ==(const AutoSnake& snake)const;
-private:
-	Action breadthFisrtSearch();
+private: 
 	Snake _snake;
 	Map*const _map;
 	Global::GameItem _lastCollisionItem;
-	GreedStrategy _strategy;
+	GreedStrategy _greedStrategy;
+	AStarStrategy _aStarStrategy;
 };

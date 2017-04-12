@@ -10,7 +10,8 @@ AutoSnake::AutoSnake(Map* map, const Position& head, int snakeSize) :
 	_snake(head,snakeSize),
 	_map(map),
 	_lastCollisionItem(GameItem::None),
-	_strategy(map)
+	_greedStrategy(map),
+	_aStarStrategy(map)
 {
 	ASSERT_NOT_NULLPTR(map, "map不能为空指针"); 
 }
@@ -23,7 +24,8 @@ AutoSnake::~AutoSnake()
 void AutoSnake::advance()
 {
 	//Action action = breadthFisrtSearch();
-	auto action = _strategy.compute(_snake.head());
+	//auto action = _greedStrategy.compute(_snake.head()); 
+	auto action = _aStarStrategy.compute(_snake.head());
 	_map->removeGameItem(_snake.tail());
 	switch (action)
 	{ 
@@ -179,164 +181,4 @@ void AutoSnake::die()
 bool AutoSnake::operator==(const AutoSnake & snake) const
 {
 	return this->_snake == snake._snake;
-}
- 
- 
-AutoSnake::Action AutoSnake::breadthFisrtSearch()
-{
-	enum Flag
-	{
-		ready, // ready for setting
-		mark,  // temp flag for marking
-		disable, //disable setting
-		left,
-		right,
-		up,
-		down
-	};
-
-	// hash table
-	static Flag des[HEIGHT][WIDTH]; 
-	auto head = _snake.head();
-	auto foodSet = _map->getSet(GameItem::Food);
-
-	if (foodSet.empty())
-	{   // not found food,do nothing
-		return none;
-	}
-	// init des with ready flag or disable flag,init food pos with ready
-	for (int i = 0; i < HEIGHT; i++)
-	{
-		for (int j = 0; j < WIDTH; j++)
-		{
-			des[i][j] = (_map->getGameItem({ j,i }) == GameItem::None ? ready : disable);
-		}
-	}
-	for (auto& i : foodSet)
-	{
-		des[i.y][i.x] = ready;
-	}
-
-	// set the flag if Position {x,y} is legal and map[y][x] is NONE or Head,  and des[y][x] is ready
-	// reutrn if had set flag
-	auto trySetFlag = [&](int x, int y, Flag flag) {
-		x = (x + WIDTH) % WIDTH;
-		y = (y + HEIGHT) % HEIGHT;
-		if (des[y][x] == ready\
-			&& (_map->getGameItem({ x,y }) == GameItem::None|| _map->getGameItem({ x,y }) == GameItem::Food))
-		{
-			des[y][x] = flag;
-			return true;
-		}
-		return false;
-	};
-
-	// replace with new flag if des[y][x] is old flag
-	// reutrn if had replaced flag 
-	auto tryReplaceFlag = [&](int x, int y, Flag oldFlag, Flag newFlag) {
-		ASSERT_POS_LEGAL(x,y);
-		if (des[y][x] == oldFlag)
-		{
-			des[y][x] = newFlag;
-			return true;
-		}
-		return false;
-	};
-
-	// set flag if position is leagl , and nearby {x,y} and corresponding oldval is ready
-	// reutrn if had set flag
-	auto trySetNearbyFlag = [&](int x, int y, Flag flag) {
-		bool leftFlag = trySetFlag(x - 1, y, flag);
-		bool rightFlag = trySetFlag(x + 1, y, flag);
-		bool upFlag = trySetFlag(x, y - 1, flag);
-		bool downFlag = trySetFlag(x, y + 1, flag);
-		return leftFlag || rightFlag || upFlag || downFlag;
-	};
-
-	// diffuse flag
-	// return if had diffused flag
-	auto tryDiffuseFlag = [&](Flag flag) {
-		bool diffused{};
-		for (int i = 0; i < HEIGHT; i++)
-		{
-			for (int j = 0; j <WIDTH; j++)
-			{
-				if (des[i][j] == flag)
-				{
-					diffused = (trySetNearbyFlag(j, i, mark) ? true : diffused);
-				}
-			}
-		}
-		if (diffused)
-		{
-			for (int i = 0; i < HEIGHT; i++)
-			{
-				for (int j = 0; j < WIDTH; j++)
-				{
-					tryReplaceFlag(j, i, mark, flag);
-				}
-			}
-		}
-		return diffused;
-	};
-
-	//init state
-	trySetFlag(head.x - 1+WIDTH, head.y, left);
-	trySetFlag(head.x + 1, head.y, right);
-	trySetFlag(head.x, head.y - 1, up);
-	trySetFlag(head.x, head.y + 1, down);
-
-	//init action possible 
-	bool leftAble = true;
-	bool rightAble = true;
-	bool downAble = true;
-	bool upAble = true;
-
-
-	//breadth first serach
-	while (leftAble || rightAble || downAble || upAble)
-	{
-		if (leftAble)
-		{
-			leftAble = tryDiffuseFlag(left);
-		}
-		if (rightAble)
-		{
-			rightAble = tryDiffuseFlag(right);
-		}
-		if (downAble)
-		{
-			downAble = tryDiffuseFlag(down);
-		}
-		if (upAble)
-		{
-			upAble = tryDiffuseFlag(up);
-		}
-		for (auto& i : foodSet)
-		{
-			if(des[i.y][i.x] != ready)
-			{
-				switch (des[i.y][i.x])
-				{
-				case left:
-					return toLeft;
-					break;
-				case right:
-					return toRight;
-					break;
-				case up:
-					return toUp;
-					break;
-				case down:
-					return toDown;
-					break;
-				default:
-					ASSERT_TRUE(false, "wrong case");
-					break;
-				}
-			} 
-		} 
-	}
-	//ASSERT_LOG("none action");
-	return none;
 } 
