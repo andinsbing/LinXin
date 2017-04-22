@@ -1,7 +1,8 @@
 #pragma once
 #include<functional>
 #include<thread>
-#include<utility>
+#include<utility> 
+#include<mutex>
 
 template<class Fn, class... Arg>
 class Timer
@@ -28,20 +29,22 @@ public:
 	Timer(Timer&&) = delete;
 	~Timer()
 	{
-		_state = destroyed;
+		finish();
 		_thread.join(); 
-	}
+	} 
 	void run()
 	{
-		_state = running;
-	}
+		setState(running);
+	} 
+	//puase event loop immediately after the latest event finished
 	void pause()
 	{
-		_state = paused;
-	} 
-	void stop()
+		setState(paused);
+	}
+	//break event loop
+	void finish() 
 	{
-		_state = destroyed;
+		setState(destroyed);
 	}
 	State state()const
 	{
@@ -52,7 +55,7 @@ private:
 	{
 		while (true)
 		{
-			std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(_interval)); 
+			std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(_interval));
 			switch (_state)
 			{
 			case ready: 
@@ -60,7 +63,9 @@ private:
 				std::this_thread::yield();
 				break;
 			case running:
+				_loopSafeMutex.lock();
 				_fun();
+				_loopSafeMutex.unlock();
 				break;
 			case destroyed:
 				return;
@@ -69,9 +74,17 @@ private:
 			}
 		}
 	}
+	//event loop safe
+	void setState(State state)
+	{ 
+		_loopSafeMutex.lock();
+		_state = state;
+		_loopSafeMutex.unlock();
+	}
 	const int _interval;
 	State _state; 
 	const std::function<typename std::result_of<RefFun(Arg...)>::type()> _fun;
 	std::thread _thread;
+	std::mutex _loopSafeMutex;
 };
  

@@ -1,6 +1,8 @@
 #pragma once
-#include"snake.h"
-#include"autosnakestrategy.h"
+#include<memory>
+#include"snake.h" 
+
+class AbstractAutoSnakeStrategy;
 
 class Map; 
 
@@ -28,7 +30,6 @@ public:
 private: 
 	Snake _snake;
 	Map*const _map;
-	Global::GameItem _lastCollisionItem;
-	GreedStrategy _greedStrategy;
-	AStarStrategy _aStarStrategy;
+	Global::GameItem _lastCollisionItem; 
+	std::unique_ptr<AbstractAutoSnakeStrategy> _strategy;
 };

@@ -1,6 +1,8 @@
 #include<cstdlib>
 #include"autosnake.h"
+#include"abstractautosnakestrategy.h"
 #include"map.h"
+#include"autosnakestrategyfactory.h"
 
 using ::Global::GameArea::HEIGHT;
 using ::Global::GameArea::WIDTH;
@@ -9,11 +11,11 @@ using ::Global::GameItem;
 AutoSnake::AutoSnake(Map* map, const Position& head, int snakeSize) :
 	_snake(head,snakeSize),
 	_map(map),
-	_lastCollisionItem(GameItem::None),
-	_greedStrategy(map),
-	_aStarStrategy(map)
+	_lastCollisionItem(GameItem::None), 
+	_strategy(AutoSnakeStrategyFactory::constractAStartStrategy(map))
 {
 	ASSERT_NOT_NULLPTR(map, "map不能为空指针"); 
+	ASSERT_NOT_NULLPTR(_strategy.get(), "strategy不能为空");
 }
 
 AutoSnake::~AutoSnake()
@@ -22,10 +24,8 @@ AutoSnake::~AutoSnake()
 }
 
 void AutoSnake::advance()
-{
-	//Action action = breadthFisrtSearch();
-	//auto action = _greedStrategy.compute(_snake.head()); 
-	auto action = _aStarStrategy.compute(_snake.head());
+{   
+	auto action = _strategy.get()->compute(_snake.head());
 	_map->removeGameItem(_snake.tail());
 	switch (action)
 	{ 
@@ -108,6 +108,7 @@ GameItem AutoSnake::collisionItem() const
 void AutoSnake::appendTail()
 {
 	_snake.append(_snake.lastTail());
+	_map->setGameItem(_snake.tail(), Global::GameItem::SnakeBody);
 }
 
 void AutoSnake::append(const Position & pos)
@@ -171,9 +172,10 @@ bool AutoSnake::accessible(const Position & pos)
 
 void AutoSnake::die()
 {
-	for (auto&i : _snake.shape())
+	//死亡的时候，头部不会变为食物
+	for(auto i=++_snake.shape().begin();i!=_snake.shape().end();i++)
 	{
-		_map->setGameItem(i, GameItem::Food);
+		_map->setGameItem(*i, GameItem::Food);
 	}
 	_snake.die();
 }

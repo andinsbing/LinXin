@@ -75,6 +75,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <Profile>true</Profile>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -82,6 +85,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <Profile>true</Profile>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -94,6 +100,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -107,28 +114,41 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="astarstrategy.cpp" />
+    <ClCompile Include="astarstrategyfactor.cpp" />
     <ClCompile Include="autosnake.cpp" />
-    <ClCompile Include="autosnakestrategy.cpp" />
+    <ClCompile Include="abstractautosnakestrategy.cpp" />
+    <ClCompile Include="autosnakestrategyfactory.cpp" />
     <ClCompile Include="console.cpp" />
+    <ClCompile Include="flagcontroller.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="gamecontroler.cpp" />
     <ClCompile Include="gamescene.cpp" />
     <ClCompile Include="gameview.cpp" />
+    <ClCompile Include="greedstrategycpp.cpp" />
     <ClCompile Include="macro.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="snake.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="astarstrategy.h" />
+    <ClInclude Include="astarstrategyfactor.h" />
     <ClInclude Include="autosnake.h" />
-    <ClInclude Include="autosnakestrategy.h" />
+    <ClInclude Include="abstractautosnakestrategy.h" />
+    <ClInclude Include="autosnakestrategyfactory.h" />
     <ClInclude Include="console.h" />
+    <ClInclude Include="flagcontroller.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="gamecontroler.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="gamescene.h" />
     <ClInclude Include="gameview.h" />
+    <ClInclude Include="greedstrategy.h" />
     <ClInclude Include="macro.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="position.h" />

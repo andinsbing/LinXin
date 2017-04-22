@@ -10,7 +10,8 @@ public:
 	GameScene();
 	~GameScene(); 
 	void advance(); 
-	const Map& map()const;
+	const Map& map()const;  
+	void renew();
 private:
 	void adjustFood();
 	void addAutoSnake(const Position& head, int snakeSize);

@@ -4,18 +4,21 @@
 using ::Global::GameArea::WIDTH;
 using ::Global::GameArea::HEIGHT;
 using ::Global::GameItem;
+ 
 
 GameScene::GameScene():
 	_map(), 
-	_foodLimit(5),
+	_foodLimit(10),
 	_autoSnakeSet(),
 	_advanceMutex()
-{
-	srand(static_cast<unsigned int>(std::time(NULL)));
+{ 
+	srand(static_cast<unsigned int>(std::time(NULL))); 
 	addAutoSnake({ 2,2 }, 1);
 	addAutoSnake({ 0,10 }, 1);
+	addAutoSnake({ 12,12 }, 1);
 	addAutoSnake({ 15,15 }, 1);
-	addAutoSnake({ 20,19 }, 1);  
+	//addAutoSnake({ 18,18 }, 1);
+	//addAutoSnake({ 19,0 }, 1);
     adjustFood();
 }
 
@@ -24,11 +27,10 @@ GameScene::~GameScene()
 }
 
 void GameScene::advance()
-{
-	std::lock_guard<std::mutex> lock{ _advanceMutex };  // thread safe
+{ 
 	auto temp = _autoSnakeSet.begin();
 	for (auto& it=_autoSnakeSet.begin();it!=_autoSnakeSet.end();)
-	{// removeble traversal
+	{// removeble traversal 
 		temp = it;
 		it++;
 		temp->advance();
@@ -41,17 +43,30 @@ const Map & GameScene::map() const
 	return _map;
 }
 
+void GameScene::renew()
+{
+	_autoSnakeSet.clear();
+	_map.renew();
+	addAutoSnake({ 2,2 }, 1);
+	addAutoSnake({ 0,10 }, 1);
+	addAutoSnake({ 12,12 }, 1);
+	addAutoSnake({ 15,15 }, 1);
+	//addAutoSnake({ 18,18 }, 1);
+	//addAutoSnake({ 19,0 }, 1);
+	adjustFood();
+}
+
 void GameScene::adjustFood()
 {
 	int x = 0;
 	int y = 0;
-	for(int i=_map.count(GameItem::Food);i < _foodLimit;i++)
+	for (int i = _map.count(GameItem::Food); i < _foodLimit; i++)
 	{
 		do
 		{
 			x = std::rand() % WIDTH;
 			y = std::rand() % HEIGHT;
-		} while (_map.getGameItem({ x,y }) != GameItem::None);
+		} while (_map.getGameItem({ x,y }) != GameItem::None); 
 		_map.setGameItem({ x,y }, GameItem::Food);
 	}
 }
@@ -73,12 +88,13 @@ void GameScene::handleCollision(AutoSnake& snake)
 		break;
 	case GameItem::Food:
 		snake.appendTail();
-		adjustFood();
+  		adjustFood(); 
 		break;
 	case GameItem::SnakeBody:
 		removeAutoSnake(snake);
 		break;
-	default:
+	default: 
+		ASSERT_TRUE(false, "error case");
 		break;
 	}
 }

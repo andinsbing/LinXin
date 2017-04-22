@@ -42,7 +42,25 @@
     <ClCompile Include="gamecontroler.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="autosnakestrategy.cpp">
+    <ClCompile Include="flagcontroller.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="abstractautosnakestrategy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="greedstrategycpp.cpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="astarstrategy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="autosnakestrategyfactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="astarstrategyfactor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +98,25 @@
     <ClInclude Include="global.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="autosnakestrategy.h">
+    <ClInclude Include="flagcontroller.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="abstractautosnakestrategy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="greedstrategy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="astarstrategy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="autosnakestrategyfactory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="astarstrategyfactor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

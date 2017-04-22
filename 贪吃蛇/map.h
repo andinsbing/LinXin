@@ -12,6 +12,9 @@ public:
 	~Map();
 	Map(const Map&) = default;
 	Map& operator =(const Map&) = default;
+ 
+	//back to initial state
+	void renew();
 
 	void setGameItem(const Position& pos, Global::GameItem gameItem);
 
@@ -19,7 +22,7 @@ public:
 
 	Global::GameItem getGameItem(const Position& pos)const;
 
-	std::vector<Position>&& getSet(const Global::GameItem gameItem)const;
+	std::vector<Position> getSet(const Global::GameItem gameItem)const;
 
 	void forEach(const std::function<void(Global::GameItem)>& fun)const;
 

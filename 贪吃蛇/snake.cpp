@@ -5,6 +5,7 @@
 using ::Global::GameArea::WIDTH;
 using ::Global::GameArea::HEIGHT;
 
+
 int Snake::_IDCount = 0;
 
 Snake::Snake(const Position& head, int snakeSize):
@@ -31,7 +32,7 @@ void Snake::up()
 	auto &head = _shape.front();
 	_lastTail = _shape.back();
 	this->_shape.push_front({ head.x,(head.y - 1 + HEIGHT) % HEIGHT });
-	this->_shape.pop_back();
+	this->_shape.pop_back(); 
 }
 
 void Snake::down()
@@ -39,7 +40,7 @@ void Snake::down()
 	auto &head = _shape.front();
 	_lastTail = _shape.back();
 	this->_shape.push_front({ head.x,(head.y + 1) % HEIGHT });
-	this->_shape.pop_back();
+	this->_shape.pop_back(); 
 }
 
 void Snake::left()
@@ -47,7 +48,7 @@ void Snake::left()
 	auto &head = _shape.front();
 	_lastTail = _shape.back();
 	this->_shape.push_front({ (head.x - 1 + WIDTH) % WIDTH,head.y });
-	this->_shape.pop_back();
+	this->_shape.pop_back(); 
 }
 
 void Snake::right()
@@ -55,7 +56,7 @@ void Snake::right()
 	auto &head = _shape.front();
 	_lastTail = _shape.back();
 	this->_shape.push_front({ (head.x + 1) % WIDTH ,head.y });
-	this->_shape.pop_back();
+	this->_shape.pop_back(); 
 } 
 
 void Snake::die()
@@ -87,3 +88,4 @@ bool Snake::operator ==(const Snake& snake) const
 {
 	return this->_ID == snake._ID;
 }
+ 

@@ -6,15 +6,30 @@ using ::Global::GameArea::WIDTH;
 using ::Global::GameArea::HEIGHT;
 using ::Global::GameItem;
 
-GameView::GameView(int refreshMillisecond,const Map& map) :
-	_map(&map),
+GameView::GameView(int refreshMillisecond,const GameScene& scene) :
+	_map(&scene.map()),
 	_last_map_ver(),
 	_console(),
 	_timer(refreshMillisecond,&GameView::monitor, std::move(const_cast<GameView*>(this)))
 {
+	initializeWindow();
 	ASSERT_NOT_NULLPTR(_map, "_map²»ÄÜÎª¿Õ"); 
 	_timer.run();
 } 
+ 
+
+void GameView::initializeWindow()
+{
+	system("cls");
+	for (int i = 0; i < Global::GameArea::HEIGHT; i++)
+	{
+		_console.putElement({ static_cast<short>(Global::GameArea::WIDTH), static_cast<short>(i) }, '|');
+	}
+	for (int i = 0; i < Global::GameArea::WIDTH; i++)
+	{
+		_console.putElement({ static_cast<short>(i), static_cast<short>(Global::GameArea::HEIGHT) }, '-');
+	}
+}
 
 void GameView::monitor()
 {
@@ -38,7 +53,7 @@ void GameView::update(const Position & pos, GameItem item)
 	_console.putElement(static_cast<COORD>(pos), translate(item));
 }
 
-char GameView::translate(GameItem item)
+char GameView::translate(GameItem item)const
 {
 	char ret = 0;
 	switch (item)

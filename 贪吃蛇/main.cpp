@@ -1,15 +1,7 @@
-#include<iostream>
-#include<Windows.h>
-#include<functional>
-#include<mutex>
-#include<algorithm>
-#include<list>
-#include"timer.h" 
-#include"global.h"
-#include"gamescene.h"
-#include"gameview.h"
-#include"map.h"
-#include"gamecontroler.h"
+#include<iostream> 
+#include<thread>
+#include<vector>
+#include"game.h"
 
 using namespace std;
  
@@ -18,28 +10,32 @@ void fun(int val)
 	cout << "fun called" << val << " ";
 }  
 
-  
-int main() 
+void newGame()
 { 
-	system("cls");
-	Sleep(2000);
-	for (int i = 0; i <  Global::GameArea::HEIGHT; i++)
+	Game game;
+	game.start();
+	while (true)
 	{
-		for (int i = 0; i < Global::GameArea::WIDTH; i++)
+		while (!game.isGameOver())
 		{
-			cout << ' ';
+			Sleep(10000);
+			this_thread::yield();
+			game.end();
 		}
-		cout << "|\n";
+		game.renew();
+		//Sleep(3000);
+		//game.renew();
 	}
-	for (int i = 0; i < Global::GameArea::WIDTH; i++)
+}
+ 
+int main()  
+{
+	for (int i = 10; i < 999; i++ )
 	{
-		cout << '-';
-	}
-	cout << endl;
-	GameScene scene;  
-	GameView view(50,scene.map());
-	GameControler controler(50, scene);
-
-	system("pause"); 
+		newGame();
+	} 
+	//Game game;
+	//game.start();
+	cin.get();//pause 
 	return 0;
 }

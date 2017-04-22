@@ -6,7 +6,7 @@ void macroTracingLog(bool on,const char* info);
 #define MACRO_ON
 
 #ifdef MACRO_ON
-#define ASSERT_TRUE(x,info) { macroTracingLog(!(x),info); }
+#define ASSERT_TRUE(x,info) { macroTracingLog(!(x),info); } 
 #else
 #define ASSERT_TRUE(x,info)
 #endif

@@ -11,6 +11,21 @@ GameControler::~GameControler()
 {
 }
 
+void GameControler::start()
+{
+	_timer.run();
+}
+
+void GameControler::pause()
+{
+	_timer.pause();
+}
+
+void GameControler::release()
+{
+	_timer.finish();
+}
+
 void GameControler::control()
 {
 	_scene->advance();

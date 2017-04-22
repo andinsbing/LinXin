@@ -15,6 +15,11 @@ Map::~Map()
 {
 }
 
+void Map::renew()
+{
+	std::fill(&_map[0][0], &_map[HEIGHT - 1][WIDTH - 1 + 1], Global::GameItem::None);
+}
+
 void Map::setGameItem(const Position & pos, GameItem gameItem)
 {
 	ASSERT_POS_LEGAL(pos.x, pos.y);
@@ -33,20 +38,20 @@ GameItem Map::getGameItem(const Position & pos) const
 	return _map[pos.y][pos.x];
 }
 
-std::vector<Position>&& Map::getSet(const GameItem gameItem) const
+std::vector<Position> Map::getSet(const GameItem gameItem) const
 {
-	auto set = new std::vector<Position>();
+	std::vector<Position> set;
 	for (int i = 0; i < HEIGHT; i++)
 	{
 		for (int j = 0; j < WIDTH; j++)
 		{
 			if (_map[i][j] == gameItem)
 			{
-				set->push_back({ j,i });
+				set.push_back({ j,i });
 			}
 		}
 	}
-	return std::move(*set);
+	return std::move(set);
 }
 
 void Map::forEach(const std::function<void(GameItem)>& fun) const

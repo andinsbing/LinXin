@@ -19,7 +19,7 @@ public:
 	const std::deque<Position>& shape()const;
 	Position lastTail()const;
 	bool operator ==(const Snake& snake)const;
-private:
+private: 
 	std::deque<Position> _shape;
 	Position _lastTail;
 	const int _ID;
