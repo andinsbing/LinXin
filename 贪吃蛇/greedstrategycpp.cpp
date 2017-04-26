@@ -49,6 +49,16 @@ AbstractAutoSnakeStrategy::Action GreedStrategy::compute(const Position & head)
 	return safeChoose(head);
 }
 
+void GreedStrategy::saveConfiguration(double rank)
+{
+	// not need ,do nothing
+}
+
+void GreedStrategy::loadConfiguration()
+{
+	// not need ,do nothing
+}
+
 AbstractAutoSnakeStrategy::Action GreedStrategy::translate(FlagController::FlagType flag) const
 {
 	switch (flag)

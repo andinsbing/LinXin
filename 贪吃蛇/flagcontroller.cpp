@@ -86,7 +86,7 @@ void FlagController::setNearbyFlag(const Position & pos, FlagType flag)
 FlagController::FlagType FlagController::getFlag(const Position & pos)const
 {
 	return _flagMap[pos.y][pos.x];
-}
+} 
 
 bool FlagController::diffuse(FlagType flag)
 {

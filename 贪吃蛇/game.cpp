@@ -3,8 +3,8 @@
 
 Game::Game():
 	_scene(),
-	_view(30,_scene),
-	_controler(30,_scene)
+	_view(10,_scene),
+	_controler(10,_scene)
 {
 	
 

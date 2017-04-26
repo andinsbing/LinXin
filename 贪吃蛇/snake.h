@@ -6,6 +6,7 @@
 class Snake
 {
 public:
+	//蛇身由头开始向左展开为一排
 	Snake(const Position& head, int snakeSize);
 	~Snake();
 	void append(const Position& newTail);

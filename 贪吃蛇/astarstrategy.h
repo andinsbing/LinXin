@@ -1,6 +1,7 @@
 #pragma once
 #include"abstractautosnakestrategy.h"
 #include"flagcontroller.h"
+#include"astarstrategyfactor.h"
 class Map;
 
 class AStarStrategy :public AbstractAutoSnakeStrategy
@@ -8,30 +9,21 @@ class AStarStrategy :public AbstractAutoSnakeStrategy
 	struct Rank
 	{
 		double foodRank;
-		double regionRank;
+		double regionRank; 
 		bool operator > (const Rank& rank)const;
-	};
-public:
-	struct Factor
-	{
-		double regionComparingFactory;
-		double regionRankProportion;
-		double foodMaxRank;
-		double foodMinRank;
-		double foodBaseRank;
-		double foodRankDecreseProportion;
-		int foodAmountCalculated;
-		double foodRankProportion;
-	};
+		static 	AStarStrategyFactor factor; 
+	}; 
 public:
 	AStarStrategy(Map* map);
-	AStarStrategy(Map* map, const Factor& factor);
+	AStarStrategy(Map* map, const AStarStrategyFactor& factor);
 	Action compute(const Position& head)override;
+	void saveConfiguration(double rank)override;
+	void loadConfiguration()override;
 private:
 	double getFoodRank(const Position& pos);
 	double getRegionRank(const Position& pos);
 	const Map*const _map;
 	FlagController _flagController;
-	Factor _factor;
-	const static Factor originFactor;
+	AStarStrategyFactor _factor; 
+	const static AStarStrategyFactor originFactor;
 };

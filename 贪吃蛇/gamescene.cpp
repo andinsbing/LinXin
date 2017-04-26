@@ -8,18 +8,11 @@ using ::Global::GameItem;
 
 GameScene::GameScene():
 	_map(), 
-	_foodLimit(10),
-	_autoSnakeSet(),
-	_advanceMutex()
+	_foodLimit(4),
+	_autoSnakeSet()
 { 
 	srand(static_cast<unsigned int>(std::time(NULL))); 
-	addAutoSnake({ 2,2 }, 1);
-	addAutoSnake({ 0,10 }, 1);
-	addAutoSnake({ 12,12 }, 1);
-	addAutoSnake({ 15,15 }, 1);
-	//addAutoSnake({ 18,18 }, 1);
-	//addAutoSnake({ 19,0 }, 1);
-    adjustFood();
+	renew();
 }
 
 GameScene::~GameScene()
@@ -47,10 +40,10 @@ void GameScene::renew()
 {
 	_autoSnakeSet.clear();
 	_map.renew();
-	addAutoSnake({ 2,2 }, 1);
-	addAutoSnake({ 0,10 }, 1);
-	addAutoSnake({ 12,12 }, 1);
-	addAutoSnake({ 15,15 }, 1);
+	addAutoSnake({ 2,2 }, 5);
+	addAutoSnake({ 0,10 }, 5);
+	addAutoSnake({ 12,12 }, 5);
+	//addAutoSnake({ 15,15 }, 5);
 	//addAutoSnake({ 18,18 }, 1);
 	//addAutoSnake({ 19,0 }, 1);
 	adjustFood();

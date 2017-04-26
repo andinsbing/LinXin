@@ -7,7 +7,7 @@ class AStarStrategyFactor
 {
 	struct Factor
 	{
-		double regionComparingFactory;
+		double regionComparingFactor;
 		double regionRankProportion;
 		double foodMaxRank;
 		double foodMinRank;
@@ -20,7 +20,7 @@ class AStarStrategyFactor
 public:
 	AStarStrategyFactor(); 
 	AStarStrategyFactor(
-		double regionComparingFactory,
+		double regionComparingFactor,
 		double regionRankProportion,
 		double foodMaxRank,
 		double foodMinRank,
@@ -33,12 +33,22 @@ public:
 	~AStarStrategyFactor();
 	void setFactorRank(double factorRank);
 	void save()const;
-	void load();
+	void load(); 
+	double regionComparingFactor()const;
+	double regionRankProportion()const;
+	double foodMaxRank()const;
+	double foodMinRank()const;
+	double foodBaseRank()const;
+	double foodRankDecreseProportion()const;
+	int foodAmountCalculated()const;
+	double foodRankProportion()const;
+	double factorRank()const; 
+
 private:
-	std::string&& translate(const Factor& factor)const;
+	std::string translate(const Factor& factor)const;
 	Factor translate(const std::string& content)const;
 	//get first 100 line content.if facotrs are insufficient,get all content (always ignore comments)
-	std::vector<std::string>&& getFrontContent()const;
+	std::vector<std::string> getFrontContent()const;
 	Factor _factor; 
 	const static std::string fileHead;
 	const static std::string sourceFilePath;

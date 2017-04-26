@@ -12,6 +12,7 @@ GameView::GameView(int refreshMillisecond,const GameScene& scene) :
 	_console(),
 	_timer(refreshMillisecond,&GameView::monitor, std::move(const_cast<GameView*>(this)))
 {
+	_console.hideCursor();
 	initializeWindow();
 	ASSERT_NOT_NULLPTR(_map, "_map²»ÄÜÎª¿Õ"); 
 	_timer.run();

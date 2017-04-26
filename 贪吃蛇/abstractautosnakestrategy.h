@@ -13,16 +13,7 @@ public:
 	};
 	AbstractAutoSnakeStrategy() = default;
 	virtual ~AbstractAutoSnakeStrategy() = default;
-	virtual Action compute(const Position& head) = 0; 
-};
-
-
-
-class SmartAutoSnakeStrategy
-{
-	struct Factor
-	{
-	}; 
-
-
-};
+	virtual Action compute(const Position& head) = 0;
+	virtual void saveConfiguration(double rank)= 0;
+	virtual void loadConfiguration() = 0;
+}; 

@@ -14,13 +14,18 @@ void newGame()
 { 
 	Game game;
 	game.start();
+	int timesLimit;
 	while (true)
 	{
+		timesLimit = 100;
 		while (!game.isGameOver())
 		{
-			Sleep(10000);
-			this_thread::yield();
-			game.end();
+			Sleep(5000);
+			this_thread::yield(); 
+			if (--timesLimit == 0)
+			{
+				break;
+			}
 		}
 		game.renew();
 		//Sleep(3000);

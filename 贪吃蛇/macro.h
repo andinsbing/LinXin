@@ -15,7 +15,7 @@ void macroTracingLog(bool on,const char* info);
 #define ASSERT_FALSE(x,info)  { ASSERT_TRUE(!(x),info)  } 
 #define ASSERT_NOT_NULLPTR(x,info) {ASSERT_TRUE(x,info) }
 
-#define ASSERT_OP_TURE(x,op,y,info)  { ASSERT_TRUE( (x) op (y) ,info) }
+#define ASSERT_OP_TURE(x,op,y,info)  { ASSERT_TRUE( ((x) op (y)) ,info ) }
 
 #define ASSERT_EQUAL(x,y,info)  { ASSERT_OP_TURE(x,==,y,info) }
 #define ASSERT_NOT_EQUAL(x,y,info) {  ASSERT_OP_TURE(x,!=,y,info) }

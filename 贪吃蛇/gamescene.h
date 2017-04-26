@@ -1,6 +1,5 @@
 #pragma once 
-#include<list>
-#include<mutex>
+#include<list> 
 #include"map.h"
 #include"autosnake.h"
 
@@ -19,6 +18,5 @@ private:
 	void removeAutoSnake(AutoSnake& snake);
 	Map _map;
 	int _foodLimit; 
-	std::list<AutoSnake> _autoSnakeSet;
-	std::mutex _advanceMutex;
+	std::list<AutoSnake> _autoSnakeSet; 
 };

@@ -28,6 +28,7 @@ public:
 	void die();
 	bool operator ==(const AutoSnake& snake)const;
 private: 
+	static int snakeAmount;
 	Snake _snake;
 	Map*const _map;
 	Global::GameItem _lastCollisionItem; 

@@ -9,11 +9,15 @@ using ::Global::GameArea::HEIGHT;
 int Snake::_IDCount = 0;
 
 Snake::Snake(const Position& head, int snakeSize):
-	_shape(static_cast<std::size_t>(snakeSize),head),
+	_shape(),
 	_lastTail(head),
 	_ID(_IDCount++)
 {
 	ASSERT_TRUE(snakeSize > 0, "size±ØÐë´óÓÚ0"); 
+	for (int i = 0; i < snakeSize; i++)
+	{ 
+		_shape.push_back(Position{ head.x - i,head.y }.standard());
+	}
 }
 
 Snake::~Snake()

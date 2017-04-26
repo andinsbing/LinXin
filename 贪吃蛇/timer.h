@@ -68,7 +68,7 @@ private:
 				_loopSafeMutex.unlock();
 				break;
 			case destroyed:
-				return;
+				return;//exist event loop
 			default:
 				break;
 			}

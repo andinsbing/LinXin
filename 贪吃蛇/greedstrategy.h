@@ -8,6 +8,8 @@ class GreedStrategy :public AbstractAutoSnakeStrategy
 public:
 	GreedStrategy(Map* map);
 	Action compute(const Position& head)override;
+	void saveConfiguration(double rank)override;
+	void loadConfiguration()override;
 private:
 	Action translate(FlagController::FlagType flag)const;
 	AbstractAutoSnakeStrategy::Action safeChoose(const Position& pos)const;

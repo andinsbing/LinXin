@@ -8,18 +8,31 @@ using ::Global::GameArea::HEIGHT;
 using ::Global::GameArea::WIDTH;
 using ::Global::GameItem;
 
+int AutoSnake::snakeAmount = 0;
+
 AutoSnake::AutoSnake(Map* map, const Position& head, int snakeSize) :
 	_snake(head,snakeSize),
 	_map(map),
 	_lastCollisionItem(GameItem::None), 
 	_strategy(AutoSnakeStrategyFactory::constractAStartStrategy(map))
 {
+	for (auto& node : _snake.shape())
+	{
+		ASSERT_NONE(_map->getGameItem(node));// check if snake shape is legal
+		_map->setGameItem(node, Global::GameItem::SnakeBody);
+	}
 	ASSERT_NOT_NULLPTR(map, "map不能为空指针"); 
 	ASSERT_NOT_NULLPTR(_strategy.get(), "strategy不能为空");
+	_strategy->loadConfiguration();
+	snakeAmount++;
 }
 
 AutoSnake::~AutoSnake()
 {
+	if (--snakeAmount == 0)
+	{
+		_strategy.get()->saveConfiguration(_map->count(Global::GameItem::SnakeBody));
+	}
 	this->die();
 }
 

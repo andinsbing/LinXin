@@ -1,19 +1,10 @@
 #include"astarstrategy.h"
 #include"map.h"
 
-const AStarStrategy::Factor AStarStrategy::originFactor
-{
-	1.5,
-	1.0,
-	100000.0,
-	0.0,
-	300000.0,
-	0.9,
-	3,
-	1.0
-};
+const AStarStrategyFactor AStarStrategy::originFactor{};
+AStarStrategyFactor AStarStrategy::Rank::factor{};
 
-AStarStrategy::AStarStrategy(Map * map, const Factor & factor) :
+AStarStrategy::AStarStrategy(Map * map, const AStarStrategyFactor & factor) :
 	_map(map),
 	_flagController(map),
 	_factor{}
@@ -50,15 +41,26 @@ AbstractAutoSnakeStrategy::Action AStarStrategy::compute(const Position & head)
 	return Action::toDown;
 }
 
+void AStarStrategy::saveConfiguration(double rank) 
+{
+	_factor.setFactorRank(rank);
+	_factor.save();
+}
+
+void AStarStrategy::loadConfiguration()
+{
+	_factor.load();
+}
+
 double AStarStrategy::getFoodRank(const Position & pos)
 {
 	if (_map->getGameItem(pos) == Global::GameItem::Food)
 	{
-		return 100000;
+		return _factor.foodMaxRank();
 	}
 	if (_map->getGameItem(pos) != Global::GameItem::None)
 	{
-		return 0;
+		return _factor.foodMinRank();
 	}
 
 	_flagController.updataFlagMap(); 
@@ -66,18 +68,19 @@ double AStarStrategy::getFoodRank(const Position & pos)
 
 	auto foodSet = _map->getSet(Global::GameItem::Food);
 
-	double rankIncrement = 30000;
-	double ret = 1;
-	int foodLeft = 3;
+	double ret = _factor.foodMinRank() + 1;
+	int foodCountLeft = _factor.foodAmountCalculated();
+	double foodDecreasementProportion = _factor.foodRankDecreseProportion();
+	double rankIncrement = _factor.foodMinRank() + _factor.foodMaxRank() / foodCountLeft;
 
-	while (foodLeft > 0 && _flagController.diffuse(FlagController::up))
+	while (foodCountLeft > 0 && _flagController.diffuse(FlagController::up))
 	{
-		rankIncrement *= 0.9;
+		rankIncrement *= foodDecreasementProportion;
 		for (auto& pos : foodSet)
 		{
 			if (_flagController.getFlag(pos) == FlagController::up)
 			{
-				foodLeft--;
+				foodCountLeft--;
 				ret += rankIncrement;
 			}
 		}
@@ -96,11 +99,11 @@ double AStarStrategy::getRegionRank(const Position & pos)
 
 bool AStarStrategy::Rank::operator>(const Rank & rank) const
 {
-	if (this->regionRank > rank.regionRank*1.5)
+	if (this->regionRank > rank.regionRank*factor.regionComparingFactor())
 	{
 		return true;
 	}
-	if (this->regionRank*1.5 < rank.regionRank)
+	if (this->regionRank*factor.regionComparingFactor() < rank.regionRank)
 	{
 		return false;
 	}
