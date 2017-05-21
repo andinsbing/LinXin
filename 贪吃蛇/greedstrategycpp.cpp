@@ -7,7 +7,7 @@ GreedStrategy::GreedStrategy(Map * map) :
 {
 }
 
-AbstractAutoSnakeStrategy::Action GreedStrategy::compute(const Position & head)
+AbstractAutoSnakeStrategy::Action GreedStrategy::compute(const Position& head, const Position& tail)
 {
 	_flagController.updataFlagMap();
 	int x = head.x;

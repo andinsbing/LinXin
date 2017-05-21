@@ -13,7 +13,7 @@ public:
 	};
 	AbstractAutoSnakeStrategy() = default;
 	virtual ~AbstractAutoSnakeStrategy() = default;
-	virtual Action compute(const Position& head) = 0;
+	virtual Action compute(const Position& head,const Position& tail) = 0;
 	virtual void saveConfiguration(double rank)= 0;
 	virtual void loadConfiguration() = 0;
 }; 

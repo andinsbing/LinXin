@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "词法分析器", "词法�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "贪吃蛇", "贪吃蛇\贪吃蛇.vcxproj", "{EBA808F0-2BE9-46BC-B01E-BF866C1225C7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "草稿5", "草稿5\草稿5.vcxproj", "{B587D273-DE89-4548-A652-73D339D6C770}"
+EndProject
 Global
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
@@ -104,6 +106,14 @@ Global
 		{EBA808F0-2BE9-46BC-B01E-BF866C1225C7}.Release|x64.Build.0 = Release|x64
 		{EBA808F0-2BE9-46BC-B01E-BF866C1225C7}.Release|x86.ActiveCfg = Release|Win32
 		{EBA808F0-2BE9-46BC-B01E-BF866C1225C7}.Release|x86.Build.0 = Release|Win32
+		{B587D273-DE89-4548-A652-73D339D6C770}.Debug|x64.ActiveCfg = Debug|x64
+		{B587D273-DE89-4548-A652-73D339D6C770}.Debug|x64.Build.0 = Debug|x64
+		{B587D273-DE89-4548-A652-73D339D6C770}.Debug|x86.ActiveCfg = Debug|Win32
+		{B587D273-DE89-4548-A652-73D339D6C770}.Debug|x86.Build.0 = Debug|Win32
+		{B587D273-DE89-4548-A652-73D339D6C770}.Release|x64.ActiveCfg = Release|x64
+		{B587D273-DE89-4548-A652-73D339D6C770}.Release|x64.Build.0 = Release|x64
+		{B587D273-DE89-4548-A652-73D339D6C770}.Release|x86.ActiveCfg = Release|Win32
+		{B587D273-DE89-4548-A652-73D339D6C770}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

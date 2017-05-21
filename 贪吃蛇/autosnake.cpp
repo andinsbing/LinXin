@@ -38,7 +38,7 @@ AutoSnake::~AutoSnake()
 
 void AutoSnake::advance()
 {   
-	auto action = _strategy.get()->compute(_snake.head());
+	auto action = _strategy.get()->compute(_snake.head(),_snake.tail());
 	_map->removeGameItem(_snake.tail());
 	switch (action)
 	{ 

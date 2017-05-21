@@ -24,6 +24,22 @@ struct Position
 	{
 		return this->x != right.x || this->y != right.y;
 	}
+	Position leftPos()const
+	{
+		return Position{ x - 1,y }.standard();
+	}
+	Position rightPos()const
+	{
+		return Position{ x + 1,y }.standard();
+	}
+	Position upPos()const
+	{
+		return Position{ x,y - 1 }.standard();
+	}
+	Position downPos()const
+	{
+		return Position{ x,y + 1 }.standard();
+	}
 	Position standard()const
 	{
 		return{ (x >= 0 ? x%Global::GameArea::WIDTH : x % Global::GameArea::WIDTH + Global::GameArea::WIDTH),

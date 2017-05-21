@@ -7,7 +7,7 @@ class GreedStrategy :public AbstractAutoSnakeStrategy
 {
 public:
 	GreedStrategy(Map* map);
-	Action compute(const Position& head)override;
+	Action compute(const Position& head, const Position& tail)override;
 	void saveConfiguration(double rank)override;
 	void loadConfiguration()override;
 private:

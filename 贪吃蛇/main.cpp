@@ -3,44 +3,33 @@
 #include<vector>
 #include"game.h"
 
-using namespace std;
- 
-void fun(int val)
-{
-	cout << "fun called" << val << " ";
-}  
+using namespace std; 
 
-void newGame()
-{ 
-	Game game;
-	game.start();
-	int timesLimit;
-	while (true)
-	{
-		timesLimit = 100;
-		while (!game.isGameOver())
-		{
-			Sleep(5000);
-			this_thread::yield(); 
-			if (--timesLimit == 0)
-			{
-				break;
-			}
-		}
-		game.renew();
-		//Sleep(3000);
-		//game.renew();
-	}
-}
+//void newGame()
+//{ 
+//	Game game;
+//	game.start();
+//	int timesLimit;
+//	while (true)
+//	{
+//		timesLimit = 100;
+//		while (!game.isGameOver())
+//		{
+//			Sleep(5000);
+//			this_thread::yield(); 
+//			if (--timesLimit == 0)
+//			{
+//				break;
+//			}
+//		}
+//		game.renew(); 
+//	}
+//}
  
 int main()  
 {
-	for (int i = 10; i < 999; i++ )
-	{
-		newGame();
-	} 
-	//Game game;
-	//game.start();
-	cin.get();//pause 
+	Game game;
+	game.start();
+	system("pause");
 	return 0;
 }

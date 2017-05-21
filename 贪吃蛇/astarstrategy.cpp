@@ -18,14 +18,14 @@ AStarStrategy::AStarStrategy(Map * map):
 
 }
 
-AbstractAutoSnakeStrategy::Action AStarStrategy::compute(const Position & head)
+AbstractAutoSnakeStrategy::Action AStarStrategy::compute(const Position& head, const Position& tail)
 {
 	int x = head.x;
 	int y = head.y;
-	Rank leftRank{ getFoodRank(Position{ x - 1,y }.standard()), getRegionRank(Position{ x - 1,y }.standard()) };
-	Rank rightRank{ getFoodRank(Position{ x + 1,y }.standard()), getRegionRank(Position{ x + 1,y }.standard()) };
-	Rank upRank{ getFoodRank(Position{ x  ,y - 1 }.standard()), getRegionRank(Position{ x  ,y - 1 }.standard()) };
-	Rank downRank{ getFoodRank(Position{ x  ,y + 1 }.standard()), getRegionRank(Position{ x ,y + 1 }.standard()) };
+	Rank leftRank{ getFoodRank(Position{ x - 1,y }.standard()), getRegionRank(Position{ x - 1,y }.standard(),tail) };
+	Rank rightRank{ getFoodRank(Position{ x + 1,y }.standard()), getRegionRank(Position{ x + 1,y }.standard(),tail) };
+	Rank upRank{ getFoodRank(Position{ x  ,y - 1 }.standard()), getRegionRank(Position{ x  ,y - 1 }.standard(),tail) };
+	Rank downRank{ getFoodRank(Position{ x  ,y + 1 }.standard()), getRegionRank(Position{ x ,y + 1 }.standard(),tail) };
 	if (leftRank > rightRank&&leftRank > upRank&&leftRank > downRank)
 	{
 		return Action::toLeft;
@@ -88,24 +88,46 @@ double AStarStrategy::getFoodRank(const Position & pos)
 	return ret;
 }
 
-double AStarStrategy::getRegionRank(const Position & pos)
+std::pair<bool, double> AStarStrategy::getRegionRank(const Position & pos, const Position& tail)
 {
-	_flagController.updataFlagMap(); 
+	std::pair<bool, double> ret{ false,0.0 };
+	_flagController.updataFlagMap();
 	_flagController.setFlagIf(pos, FlagController::up, FlagController::ready);
-
 	while (_flagController.diffuse(FlagController::up));
-	return std::sqrt(_flagController.count(FlagController::diffused));
+	ret.second = _flagController.count(FlagController::diffused);
+
+	if (pos == tail)
+	{
+		ret.first = true;
+	}
+	else if (_flagController.getFlag(tail.leftPos()) == FlagController::diffused ||
+		_flagController.getFlag(tail.rightPos()) == FlagController::diffused ||
+		_flagController.getFlag(tail.upPos()) == FlagController::diffused ||
+		_flagController.getFlag(tail.downPos()) == FlagController::diffused
+		)
+	{
+		ret.first = true;
+	}
+	return  ret;
 }
 
 bool AStarStrategy::Rank::operator>(const Rank & rank) const
 {
-	if (this->regionRank > rank.regionRank*factor.regionComparingFactor())
+	if (this->regionRank.first && !rank.regionRank.first)
 	{
 		return true;
 	}
-	if (this->regionRank*factor.regionComparingFactor() < rank.regionRank)
+	if (!this->regionRank.first&&rank.regionRank.first)
 	{
 		return false;
 	}
-	return this->foodRank * this->regionRank > rank.foodRank * rank.regionRank;
+	if (this->regionRank.second > rank.regionRank.second*factor.regionComparingFactor())
+	{
+		return true;
+	}
+	if (this->regionRank.second*factor.regionComparingFactor() < rank.regionRank.second)
+	{
+		return false;
+	}
+	return this->foodRank * this->regionRank.second > rank.foodRank * rank.regionRank.second;
 }
